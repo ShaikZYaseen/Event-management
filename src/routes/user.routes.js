@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { registerUser } from "../controllers/user.controllers.js";
+import { verifyJWT } from "../middlewares/auth.js";
+import { registerUser,loginUser,logoutUser } from "../controllers/user.controllers.js";
 const userRouter = Router();
 
 
@@ -9,10 +10,14 @@ userRouter
 .post(registerUser);
 
 
+userRouter
+.route("/login")
+.post(loginUser);
 
 
-
-
+userRouter
+.route("/logout")
+.post(verifyJWT,logoutUser);
 
 
 

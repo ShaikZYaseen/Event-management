@@ -1,3 +1,5 @@
+import Zod from "zod";
+
 const signUp = {
   username: Zod.string().min(1, { message: 'Username must be at least 1 character long' }).max(255),
   email: Zod.string().email({ message: 'Invalid email address' }),

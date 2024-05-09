@@ -2,7 +2,7 @@ import {asyncHandler} from "../utils/asyncHandler.js";
 import {apiResponse} from "../utils/apiResponse.js";
 import {apiError} from "../utils/apiError.js";
 import { User} from "../models/user.models.js"
-
+import { signIn,signUp } from "../middlewares/zod/zod.user.js";
 
 const generateAccessAndRefereshTokens = async(userId) =>{
   try {
@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async(req,res)=>{
         lastName,
         bio,
         profilePicture
-    } = req.body;
+    } = signUp.parse(req.body);
     
     //Database validation
     if (!username || !email || !password) {
@@ -85,7 +85,7 @@ const registerUser = asyncHandler(async(req,res)=>{
 const loginUser = asyncHandler(async (req, res) =>{
 
 
-  const {email, username, password} = req.body
+  const {email, username, password} = signIn.parse(req.body);
   console.log(email);
 
   if (!username && !email) {
